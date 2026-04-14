@@ -1,100 +1,197 @@
 :root{
-    --bcg-color: #001122;
-    --primary-color: #155e75;
-    --border-radius: 8px;
-    --secondary-color: #fff;
-    --border-color: #7fb7c9;
+    --bg-color: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --primary: #00c6ff;
+    --secondary: #ffffff;
+    --glass-border: rgba(255,255,255,0.2);
 }
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 body{
-    width: 100%;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--bcg-color);
+    background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
+    background-size: 600% 600%;
+    animation: gradientFlow 15s ease infinite;
 }
 
+/* 3D Glass Card */
 .box{
-    background-color: var(--primary-color);
+    width: 380px;
     padding: 30px;
-    width: 400px;
-    border-radius: var(--border-radius);
+    border-radius: 20px;
+    background: var(--card-bg);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    transform: perspective(1000px) rotateX(5deg);
+    transition: 0.4s ease;
 }
 
+.box:hover{
+    transform: perspective(1000px) rotateX(0deg) scale(1.02);
+}
+
+/* Heading */
 .qr-header h1{
-    font-size: 26px;
     text-align: center;
-    color: var(--secondary-color);
-    margin-bottom: 24px;
-    text-transform: uppercase;
+    color: var(--secondary);
+    margin-bottom: 20px;
+    letter-spacing: 1px;
 }
 
+/* Input */
 .qr-header input{
     width: 100%;
-    margin-block: 12px;
-}
-
-.qr-header input, select{
-    padding: 8px;
-    border-radius: var(--border-radius);
-    font-size: 18px;
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 10px;
+    border: none;
     outline: none;
-    border: 2px solid var(--border-color);
+    font-size: 16px;
+    transition: 0.3s;
 }
 
-.qr-header label{
-    color: var(--secondary-color);
-    font-size: 20px;
+.qr-header input:focus{
+    box-shadow: 0 0 10px var(--primary);
 }
 
+/* Select */
+.qr-header select{
+    padding: 8px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+/* Label row */
 .qr-header div{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    color: white;
 }
 
+/* Buttons */
 .qr-footer{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    margin-top: 20px;
 }
+
 .qr-footer a{
-    background-color: var(--secondary-color);
+    flex: 1;
+    margin: 5px;
+    text-align: center;
     text-decoration: none;
-    font-size: 20px;
-    padding: 14px 36px;
-    margin-inline: 2px;
-    color: var(--primary-color);
-    font-weight: 600;
-    border-radius: var(--border-radius);
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    background: linear-gradient(145deg, #00c6ff, #0072ff);
+    color: white;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
+/* Button Hover Effect */
+.qr-footer a:hover{
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+}
+
+/* QR Container */
 .qr-body{
-    display: grid;
-    place-items: center;
-    padding:20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
 
-.qr-body img{
-    max-width: 100%;
-    max-height: 100%;
-    margin-block: 10px;
-    padding: 20px;
-    border: 0.5px solid var(--border-color);
-    border-radius: var(--border-radius);
+/* QR Image Styling */
+.qr-body img,
+.qr-body canvas{
+    padding: 10px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    animation: pop 0.4s ease;
 }
 
-@media screen and (max-width:520px){
-    .box{
-        width: 80%;
+/* Animation */
+@keyframes pop{
+    from{
+        transform: scale(0.5);
+        opacity: 0;
     }
-    .qr-footer a{
-        padding: 12px;
-        font-size: 16px;
+    to{
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes gradientFlow{
+    0%{background-position: 0% 50%;}
+    50%{background-position: 100% 50%;}
+    100%{background-position: 0% 50%;}
+}
+
+.background{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.background span{
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: float 20s infinite alternate ease-in-out;
+}
+
+/* Different colors + positions */
+.background span:nth-child(1){
+    top: 10%;
+    left: 20%;
+    background: #00c6ff;
+}
+
+.background span:nth-child(2){
+    top: 60%;
+    left: 70%;
+    background: #ff6ec4;
+}
+
+.background span:nth-child(3){
+    top: 80%;
+    left: 10%;
+    background: #42e695;
+}
+
+.background span:nth-child(4){
+    top: 30%;
+    left: 80%;
+    background: #ffd200;
+}
+
+/* Floating motion */
+@keyframes float{
+    0%{
+        transform: translateY(0) scale(1);
+    }
+    100%{
+        transform: translateY(-120px) scale(1.3);
     }
 }
